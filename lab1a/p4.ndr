@@ -1,0 +1,15 @@
+program max_of_n_numbers
+
+    number n, a
+    number sum := 0
+
+    outputLine("Give n: ")
+    inputLine(n)
+
+    for i:=1 to n do
+        inputLine(a)
+        sum := sum + a
+    
+    outputLine("Sum is :" sum)
+
+end.

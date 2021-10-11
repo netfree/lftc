@@ -1,0 +1,31 @@
+Alphabet:
+    a. Upper (A-Z) and lower case letters (a-z) of the English alphabet
+    b. Underline character '_'
+    c. Decimal digits (0-9)
+
+1. Lexic:
+    a.Special symbols, representing:
+        - operators + - * / div mod := < <= = >= <> not and or
+        - separators 
+            [ ] ( ) : ; , . ..
+            whitespace (space tab newline)
+        - reserved words:
+            and array begin boolean char const div do downto else end for if inputLine integer mod not of or outputLine program record
+            string then to type var while xor 
+
+b.identifiers
+        letter = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+        digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+        identifier = letter | letter{letter}{digit}
+
+c.constants
+    1.integer
+        nonzerodigit = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+        integer = ["+" | "-"] nonzerodigit {digit} | "0"
+2.character
+    character = "'"(letter|digit|stringspecial)"'"
+3.string
+    alfanum = letter | digit
+    stringspecial =  | "?" | ":" | "." | " " | "!" | "@" ... | "#" | "<" | ">" 
+    stringchar = alfanum | stringspecial
+    string = """{stringchar}"""

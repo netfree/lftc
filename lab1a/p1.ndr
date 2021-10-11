@@ -1,0 +1,27 @@
+# Finding the maximum out of 3 numbers
+
+program max_of_3_numbers
+
+var
+    a, b, c, max: integer
+begin
+    outputLine("Give first number: ")
+    inputLine(a)
+
+    outputLine("Give second number: ")
+    inputLine(b)
+
+    outputLine("Give third number: ")
+    inputLine(c)
+
+
+    if a >= b and a >= c then
+        max := a
+    else if b >= a and b >= c then
+        max := b
+    else
+        max := c
+
+    outputLine("Maximum is: ", max)
+
+end.

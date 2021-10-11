@@ -1,0 +1,21 @@
+# GCD of two numbers
+
+program gcd
+var
+    a, b: integer;
+begin
+    outputLine("Give first number: ")
+    inputLine(a)
+
+    outputLine("Give second number: ")
+    inputLine(b)
+
+    while a <> b do
+        if a > b then
+            a := a - b
+        else
+            b := b - a
+    
+    outputLine("The GCD is: ", a)
+
+end.

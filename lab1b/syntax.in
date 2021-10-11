@@ -1,0 +1,28 @@
+program = "program" IDENTIFIER ";" sourcecode
+sourcecode = ["var" decllist] cmpdstmt "."
+decllist = {declaration ";"}
+declaration = variablelist ":" type
+variablelist = IDENTIFIER | IDENTIFIER "," variablelist
+primitivetype = "boolean" | "char" | "integer" | "real"
+arraydecl = "array" "[" STARTINDEX ".." ENDINDEX "]" "of" primitivetype
+type = primitivetype | arraydecl
+stmtblock = stmt | cmpdstmt
+cmpdstmt = "begin" stmtlist "end"
+stmtlist = stmt | stmt ";" stmtlist
+stmt = simplstmt | structstmt
+simplstmt = assignstmt | iostmt
+assignstmt = IDENTIFIER ":=" expression
+expression = expression ("+"|"-") term | term
+term = term ("*" | "div" | "mod") factor | factor
+factor = ["("] expression [")"] | IDENTIFIER
+iostmt = inputStmt | outputStmt 
+outputTokens = (IDENTIFIER|CONST) | (IDENTIFIER|CONST) "," outputTokens
+inputStmt = "inputLine" "(" variablelist ")"
+outputStmt = "outputLine" "(" 
+("inputLine" | "outputLine") "(" IDENTIFIER ")"
+structstmt = cmpdstmt | ifstmt | whilestmt
+ifstmt = "if" condition "then" stmtblock ["ELSE" stmtblock]
+whilestmt = "while" condition "do" stmtblock
+forstmt = "for" IDENTIFIER ":=" STARTVALUE ("to" | "downto") ENDVALUE stmtblock
+condition = expression RELATION expression
+RELATION = "<" | "<=" | "=" | "<>" | ">=" | ">"
