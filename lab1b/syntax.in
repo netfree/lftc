@@ -14,7 +14,7 @@ simplstmt = assignstmt | iostmt
 assignstmt = IDENTIFIER ":=" expression
 expression = expression ("+"|"-") term | term
 term = term ("*" | "div" | "mod") factor | factor
-factor = ["("] expression [")"] | IDENTIFIER
+factor = ["("] expression [")"] | IDENTIFIER | CONSTANT
 iostmt = inputStmt | outputStmt 
 outputTokens = (IDENTIFIER|CONST) | (IDENTIFIER|CONST) "," outputTokens
 inputStmt = "inputLine" "(" variablelist ")"
