@@ -7,9 +7,11 @@ program max_of_n_numbers
     inputLine(n)
 
     for i:=1 to n do
+        begin
         inputLine(a)
         sum := sum + a
-    
+        end
+
     outputLine("Sum is :" sum)
 
 end.
