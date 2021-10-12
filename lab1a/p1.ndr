@@ -1,9 +1,8 @@
 # Finding the maximum out of 3 numbers
 
 program max_of_3_numbers
-
 var
-    a, b, c, max: integer
+    a, b, c, max: integer;
 begin
     outputLine("Give first number: ")
     inputLine(a)

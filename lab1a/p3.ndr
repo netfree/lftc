@@ -4,11 +4,11 @@ program gcd
 var
     a, b: integer;
 begin
-    outputLine("Give first number: ")
-    inputLine(a)
+    outputLine("Give first number: ");
+    inputLine(a);
 
-    outputLine("Give second number: ")
-    inputLine(b)
+    outputLine("Give second number: ");
+    inputLine(b);
 
     while a <> b do
         if a > b then

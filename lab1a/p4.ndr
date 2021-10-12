@@ -1,8 +1,9 @@
 program max_of_n_numbers
-
-    number n, a
-    number sum := 0
-
+var
+    a, b, sum: integer;
+begin
+    sum := 0
+    
     outputLine("Give n: ")
     inputLine(n)
 
@@ -13,5 +14,4 @@ program max_of_n_numbers
         end
 
     outputLine("Sum is :" sum)
-
 end.
