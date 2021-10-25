@@ -19,6 +19,13 @@ class SymbolTable(object):
             self.hashmap[position].append(token)
             return position, len(self.hashmap[position]) - 1
 
+    def __str__(self):
+        s = ""
+        for key, lst in enumerate(self.hashmap):
+            if len(lst):
+                s += f"key: {key}, values: {lst}\n"
+        return s[:-1]
+
 
 def test_symbol_table(st: SymbolTable, token: str):
     print(token, st.pos(token))
@@ -26,4 +33,4 @@ def test_symbol_table(st: SymbolTable, token: str):
 
 if __name__ == "__main__":
     st = SymbolTable(13)
-    [test_symbol_table(st, token) for token in ["andrei", "ana", "mirela", "paul", "andrei", "ana", "istvan", "sergiu"]]
+    [test_symbol_table(st, token) for token in ["andrei", "ana", "mirela", "paul", "andrei", "ana", "istvan", "sergiu", "sergiu", "andrei"]]

@@ -1,0 +1,17 @@
+program max_of_n_numbers
+var
+    a, b, sum: integer
+begin
+    sum := 0
+    
+    outputLine("Pleeeaseee              Give     n'ana are mere': ")
+    inputLine(n)
+
+    for i:=1 to n do
+        begin
+        inputLine(a)
+        sum := sum + a
+        end
+
+    outputLine("Sum is :" sum)
+end.
