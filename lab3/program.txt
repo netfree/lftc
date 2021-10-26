@@ -1,17 +1,20 @@
-program max_of_n_numbers
+
+program gcd
 var
-    a, b, sum: integer
+    a, b: integer;
 begin
-    sum := 0
-    
-    outputLine("Pleeeaseee              Give     n'ana are mere': ")
-    inputLine(n)
+    outputLine("Give first number: ");
+    inputLine(a);
 
-    for i:=1 to n do
-        begin
-        inputLine(a)
-        sum := sum + a
-        end
+    outputLine("Give second number: ");
+    inputLine(b);
 
-    outputLine("Sum is :" sum)
+    while a <> b do
+        if a > b then
+            a := a - b
+        else
+            b := b - a
+
+    outputLine("The GCD is: ", a)
+
 end.

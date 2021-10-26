@@ -89,10 +89,10 @@ class Scanner(object):
         return ans
 
     def is_identifier(self, token) -> bool:
-        return re.match(r'^\w[_a-zA-Z0-9]*$', token) is not None
+        return re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', token) is not None
 
     def is_constant(self, token) -> bool:
-        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^(\'[^\']\')$|^(\"[^\"]*\")$', token) is not None
+        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^(\'[^\']\')$|^(\"[^\"]*\")$|^True$|^False$', token) is not None
 
     def scan(self, file) -> Tuple[ProgramInternalForm, SymbolTable]:
         st = SymbolTable(self.params.st_size)
@@ -130,7 +130,11 @@ class ScannerTest(object):
         assert self.scanner.is_constant("\"ubbcluj\"")
         assert self.scanner.is_constant("\"ub00luj\"")
         assert self.scanner.is_constant("\"ub%(*^%(^)(&^$luj\"")
+        assert self.scanner.is_constant("True")
+        assert self.scanner.is_constant("False")
 
+        assert not self.scanner.is_constant("qFalse")
+        assert not self.scanner.is_constant("Falsew")
         assert not self.scanner.is_constant("+1w2")
         assert not self.scanner.is_constant("w12")
         assert not self.scanner.is_constant("12q")
@@ -145,6 +149,7 @@ class ScannerTest(object):
 
     def test_all(self):
         self.test_constant()
+        self.test_identifier()
 
 
 scanner = Scanner()
