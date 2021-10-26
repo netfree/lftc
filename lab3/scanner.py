@@ -89,10 +89,10 @@ class Scanner(object):
         return ans
 
     def is_identifier(self, token) -> bool:
-        return re.match(r'^[_a-zA-Z][_a-zA-Z0-9]*$', token) is not None
+        return re.match(r'^\w[_a-zA-Z0-9]*$', token) is not None
 
     def is_constant(self, token) -> bool:
-        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^\'.\'$|^\".*\"$', token) is not None
+        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^(\'[^\']\')$|^(\"[^\"]*\")$', token) is not None
 
     def scan(self, file) -> Tuple[ProgramInternalForm, SymbolTable]:
         st = SymbolTable(self.params.st_size)
@@ -117,3 +117,36 @@ class Scanner(object):
                     else:
                         raise LexicalError(line_number + 1, f"\"{token}\" is not a valid identifier or constant")
         return pif, st
+
+
+class ScannerTest(object):
+    def __init__(self, scanner: Scanner):
+        self.scanner = scanner
+
+    def test_constant(self):
+        assert self.scanner.is_constant("+12")
+        assert self.scanner.is_constant("-10")
+        assert self.scanner.is_constant("0")
+        assert self.scanner.is_constant("\"ubbcluj\"")
+        assert self.scanner.is_constant("\"ub00luj\"")
+        assert self.scanner.is_constant("\"ub%(*^%(^)(&^$luj\"")
+
+        assert not self.scanner.is_constant("+1w2")
+        assert not self.scanner.is_constant("w12")
+        assert not self.scanner.is_constant("12q")
+
+    def test_identifier(self):
+        assert self.scanner.is_identifier("__ana12")
+        assert self.scanner.is_identifier("__ana12ana")
+
+        assert not self.scanner.is_identifier("1ana")
+        assert not self.scanner.is_identifier("#na")
+        assert not self.scanner.is_identifier("n#a")
+
+    def test_all(self):
+        self.test_constant()
+
+
+scanner = Scanner()
+scanner_test = ScannerTest(scanner)
+scanner_test.test_all()
