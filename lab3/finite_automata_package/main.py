@@ -1,4 +1,4 @@
-from constants import bcolors
+from finite_automata_package.constants import bcolors
 from finite_automata_parser import FiniteAutomataParser
 
 if __name__ == '__main__':

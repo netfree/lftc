@@ -1,0 +1,212 @@
+set_of_states
+p
+q
+r
+t
+finite_alphabet
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+N
+O
+P
+Q
+R
+S
+T
+U
+V
+W
+X
+Y
+Z
+
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+!
+@
+#
+$
+%
+^
+&
+*
+(
+)
+_
++
+{
+}
+|
+:
+"
+<
+>
+?
+,
+.
+/
+;
+'
+[
+]
+\
+-
+=
+`
+~
+
+transitions
+p ' q
+
+r ' t
+
+q a r
+q b r
+q c r
+q d r
+q e r
+q f r
+q g r
+q h r
+q i r
+q j r
+q k r
+q l r
+q m r
+q n r
+q o r
+q p r
+q q r
+q r r
+q s r
+q t r
+q u r
+q v r
+q w r
+q x r
+q y r
+q z r
+
+q A r
+q B r
+q C r
+q D r
+q E r
+q F r
+q G r
+q H r
+q I r
+q J r
+q K r
+q L r
+q M r
+q N r
+q O r
+q P r
+q Q r
+q R r
+q S r
+q T r
+q U r
+q V r
+q W r
+q X r
+q Y r
+q Z r
+
+q 0 r
+q 1 r
+q 2 r
+q 3 r
+q 4 r
+q 5 r
+q 6 r
+q 7 r
+q 8 r
+q 9 r
+
+q _ r
+q ! r
+q @ r
+q # r
+q $ r
+q % r
+q ^ r
+q & r
+q * r
+q ( r
+q ) r
+q _ r
+q + r
+q { r
+q } r
+q | r
+q : r
+q " r
+q < r
+q > r
+q ? r
+q , r
+q . r
+q / r
+q ; r
+q [ r
+q ] r
+q \ r
+q - r
+q = r
+q ` r
+q ~ r
+
+q "" r
+initial_state
+p
+final_states
+t

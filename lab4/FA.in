@@ -1,7 +1,16 @@
+set_of_states
+p
 q
-q1,q2,q3
-sigma
-
-sigma
-
-q7->q32=c
+r
+finite_alphabet
+a
+b
+transitions
+p a q
+q a q
+q b r
+p b r
+initial_state
+p
+final_states
+r

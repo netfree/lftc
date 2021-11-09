@@ -1,0 +1,38 @@
+set_of_states
+p
+q1
+r1
+t1
+u1
+
+q2
+r2
+t2
+u2
+v2
+finite_alphabet
+T
+r
+u
+e
+F
+a
+l
+s
+
+transitions
+p T q1
+q1 r r1
+r1 u t1
+t1 e u1
+
+p F q2
+q2 a r2
+r2 l t2
+t2 s u2
+u2 e v2
+initial_state
+p
+final_states
+u1
+v2

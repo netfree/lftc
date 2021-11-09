@@ -5,3 +5,9 @@ OPERATORS = ["+", "-", "*", "/", "div", "mod", ":=", "<", ">", "<=", "=", ">=", 
 SEPARATORS = ["[", "]", "(", ")", ":", ";", ",", ".", "..", "\""]
 
 
+IDENTIFIER_FA_FILE = "identifier.fa"
+INTEGER_FA_FILE = "integer.fa"
+BOOLEAN_FA_FILE = "boolean.fa"
+CHAR_FA_FILE = "char.fa"
+STRING_FA_FILE = "string.fa"
+

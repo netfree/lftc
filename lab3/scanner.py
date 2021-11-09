@@ -1,10 +1,11 @@
 from typing import Tuple, List
 
-from constants import RESERVED_WORDS, OPERATORS, SEPARATORS
+from constants import RESERVED_WORDS, OPERATORS, SEPARATORS, IDENTIFIER_FA_FILE, INTEGER_FA_FILE, BOOLEAN_FA_FILE, \
+    CHAR_FA_FILE, STRING_FA_FILE
 from exceptions.lexical_error import LexicalError
+from finite_automata_package.finite_automata_parser import FiniteAutomataParser
 from program_internal_form import ProgramInternalForm
 from symbol_table import SymbolTable
-import re
 
 
 class ScannerParams(object):
@@ -15,6 +16,12 @@ class ScannerParams(object):
 class Scanner(object):
     def __init__(self, params=ScannerParams()):
         self.params = params
+        self.identifier_fa = FiniteAutomataParser.from_file(IDENTIFIER_FA_FILE)
+        self.integer_fa = FiniteAutomataParser.from_file(INTEGER_FA_FILE)
+        self.boolean_fa = FiniteAutomataParser.from_file(BOOLEAN_FA_FILE)
+        self.char_fa = FiniteAutomataParser.from_file(CHAR_FA_FILE)
+        self.string_fa = FiniteAutomataParser.from_file(STRING_FA_FILE)
+
 
     @staticmethod
     def advanced_splitting(token: str) -> List[str]:
@@ -89,10 +96,13 @@ class Scanner(object):
         return ans
 
     def is_identifier(self, token) -> bool:
-        return re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', token) is not None
+        return self.identifier_fa.accept_sequence(token)
 
     def is_constant(self, token) -> bool:
-        return re.match(r'^(0|[+-]?[1-9][0-9]*)$|^(\'[^\']\')$|^(\"[^\"]*\")$|^True$|^False$', token) is not None
+        return self.integer_fa.accept_sequence(token) or \
+               self.boolean_fa.accept_sequence(token) or \
+               self.char_fa.accept_sequence(token) or \
+               self.string_fa.accept_sequence(token)
 
     def scan(self, file) -> Tuple[ProgramInternalForm, SymbolTable]:
         st = SymbolTable(self.params.st_size)
@@ -138,6 +148,7 @@ class ScannerTest(object):
         assert not self.scanner.is_constant("+1w2")
         assert not self.scanner.is_constant("w12")
         assert not self.scanner.is_constant("12q")
+        print("constants tests passed")
 
     def test_identifier(self):
         assert self.scanner.is_identifier("__ana12")
@@ -146,6 +157,7 @@ class ScannerTest(object):
         assert not self.scanner.is_identifier("1ana")
         assert not self.scanner.is_identifier("#na")
         assert not self.scanner.is_identifier("n#a")
+        print("identifer tests passed")
 
     def test_all(self):
         self.test_constant()

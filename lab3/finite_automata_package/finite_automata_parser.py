@@ -1,9 +1,9 @@
 from typing import List, Dict
 
-from constants import SET_OF_STATES_KEYWORD, FINITE_ALPHABET_KEYWORD, TRANSITIONS_KEYWORD, INITIAL_STATE_KEYWORD, \
+from finite_automata_package.constants import SET_OF_STATES_KEYWORD, FINITE_ALPHABET_KEYWORD, TRANSITIONS_KEYWORD, INITIAL_STATE_KEYWORD, \
     FINAL_STATES_KEYWORD
-from finite_automata import FiniteAutomata, State
-from parser_exception import ParserException
+from finite_automata_package.finite_automata import FiniteAutomata, State
+from finite_automata_package.parser_exception import ParserException
 
 
 class FiniteAutomataParser(object):
@@ -11,6 +11,8 @@ class FiniteAutomataParser(object):
     def read_transition(line: str, line_number=0):
         try:
             p, a, q = line.split(" ")
+            if a == "\"\"":
+                a = " "
             return p, a, q
         except:
             raise ParserException(line_number, "cannot read transition")
@@ -32,6 +34,8 @@ class FiniteAutomataParser(object):
             for line in f:
                 line_number += 1
                 line = line.strip(" \n")
+                if line == "":
+                    continue
                 if line in keywords:
                     last_keyword = line
                 else:
