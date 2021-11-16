@@ -55,7 +55,7 @@ class Grammar(object):
 
     def check_context_free_grammar(self):
         for production in self.productions:
-            if not production.starting_symbol.name.isupper():
+            if not production.starting_symbol.name.isupper() and len(production.starting_symbol.name) != 1:
                 return False
         return True
 
