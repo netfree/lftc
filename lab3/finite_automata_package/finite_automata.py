@@ -7,13 +7,6 @@ class State(object):
         self.final: bool = False
 
 
-class Transition(object):
-    def __init__(self, source: State, destination: State, value: str):
-        self.source = source
-        self.destination = destination
-        self.value = value
-
-
 class FiniteAutomata(object):
     def __init__(self, states: Dict[str, State], alphabet: List[str], transitions: Dict[State, Dict[str, State]],
                  initial_state: State):

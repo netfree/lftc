@@ -1,7 +1,6 @@
 set_of_states
 p
 q
-r
 finite_alphabet
 a
 b
@@ -68,43 +67,63 @@ Z
 8
 9
 
-!
-@
-#
-$
-%
-^
-&
-*
-(
-)
 _
-+
-{
-}
-|
-:
-"
-<
->
-?
-,
-.
-/
-;
-'
-[
-]
-\
--
-=
-`
-~
-
 transitions
-p " q
+p a q
+p b q
+p c q
+p d q
+p e q
+p f q
+p g q
+p h q
+p i q
+p j q
+p k q
+p l q
+p m q
+p n q
+p o q
+p p q
+p q q
+p r q
+p s q
+p t q
+p u q
+p v q
+p w q
+p x q
+p y q
+p z q
 
-q " r
+p A q
+p B q
+p C q
+p D q
+p E q
+p F q
+p G q
+p H q
+p I q
+p J q
+p K q
+p L q
+p M q
+p N q
+p O q
+p P q
+p Q q
+p R q
+p S q
+p T q
+p U q
+p V q
+p W q
+p X q
+p Y q
+p Z q
+
+p _ q
 
 q a q
 q b q
@@ -160,6 +179,8 @@ q X q
 q Y q
 q Z q
 
+q _ q
+
 q 0 q
 q 1 q
 q 2 q
@@ -170,42 +191,7 @@ q 6 q
 q 7 q
 q 8 q
 q 9 q
-
-q _ q
-q ! q
-q @ q
-q # q
-q $ q
-q % q
-q ^ q
-q & q
-q * q
-q ( q
-q ) q
-q _ q
-q + q
-q { q
-q } q
-q | q
-q : q
-q ' q
-q < q
-q > q
-q ? q
-q , q
-q . q
-q / q
-q ; q
-q [ q
-q ] q
-q \ q
-q - q
-q = q
-q ` q
-q ~ q
-
-q "" q
 initial_state
 p
 final_states
-r
+q
