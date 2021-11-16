@@ -1,6 +1,5 @@
 from typing import List
 
-
 class Production:
     def __init__(self, starting_symbol, productions):
         self.starting_symbol: Terminal = starting_symbol
@@ -35,21 +34,21 @@ class Grammar(object):
         self.productions: List[Production] = productions
 
     def print_terminals(self):
-        print("terminals: ")
+        print("\nTerminals: ")
         s = ""
         for ter in self.terminals:
             s += str(ter) + " "
         print(s)
 
     def print_non_terminals(self):
-        print("nonterminals: ")
+        print("\nNonterminals: ")
         s = ""
         for ter in self.non_terminals:
             s += str(ter) + " "
         print(s)
 
     def print_productions(self):
-        print("productions:")
+        print("\nProductions:")
         for p in self.productions:
             print(str(p))
 
@@ -78,7 +77,8 @@ class GrammarFileParser(object):
                     non_terminals = line.split()
                 if line_number == 2:
                     terminals = line.split()
-                else: # inseamna ca e production
+                else:
+                    # inseamna ca e production
                     splitted = line.split("=>")
                     if len(splitted) != 2:
                         continue
@@ -105,11 +105,6 @@ class GrammarFileParser(object):
 
         return Grammar(terminals, non_terminals, productions)
 
-
-grammar = GrammarFileParser.parse("grammar.in")
-grammar.print_terminals()
-grammar.print_non_terminals()
-grammar.print_productions()
 
 
 
