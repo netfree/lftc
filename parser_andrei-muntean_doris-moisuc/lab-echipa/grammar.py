@@ -9,8 +9,9 @@ class Production:
     def __str__(self):
         s = f"{str(self.starting_symbol)} -> "
         for i, production in enumerate(self.productions):
-            s += str(production)
-            if i != len(production) - 1:
+            for p in production:
+                s += str(p)
+            if i != len(self.productions) - 1:
                 s += " | "
         return s
 
@@ -37,14 +38,14 @@ class Grammar(object):
         print("terminals: ")
         s = ""
         for ter in self.terminals:
-            s += str(s) + " "
+            s += str(ter) + " "
         print(s)
 
     def print_non_terminals(self):
         print("nonterminals: ")
         s = ""
         for ter in self.non_terminals:
-            s += str(s) + " "
+            s += str(ter) + " "
         print(s)
 
     def print_productions(self):
