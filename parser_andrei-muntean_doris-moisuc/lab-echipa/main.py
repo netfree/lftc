@@ -4,5 +4,3 @@ grammar = GrammarFileParser.parse("g1.txt")
 grammar.print_terminals()
 grammar.print_non_terminals()
 grammar.print_productions()
-print(grammar.check_context_free_grammar())
-

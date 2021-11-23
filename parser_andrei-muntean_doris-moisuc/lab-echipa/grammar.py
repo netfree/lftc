@@ -1,37 +1,34 @@
-from typing import List
+from typing import List, Dict
 
-class Production:
-    def __init__(self, starting_symbol, productions):
-        self.starting_symbol: Terminal = starting_symbol
-        self.productions: List[List[object]] = productions
 
-    def __str__(self):
-        s = f"{str(self.starting_symbol)} -> "
-        for i, production in enumerate(self.productions):
-            for p in production:
-                s += str(p)
-            if i != len(self.productions) - 1:
-                s += " | "
-        return s
+class SymbolType(object):
+    @staticmethod
+    def is_terminal(s: str) -> bool:
+        return s.isupper()
 
-class NonTerminal:
-    def __init__(self, name):
-        self.name = name
-    def __str__(self):
-        return str(self.name)
+    @staticmethod
+    def is_non_terminal(s: str) -> bool:
+        return not s.isupper()
 
-class Terminal:
-    def __init__(self, name: str):
-        self.name = name
+class Prod(object):
+    def __init__(self, id: int, symbol: str, result: List[str]):
+        self.id = id
+        self.symbol = symbol
+        self.result = result
 
-    def __str__(self):
-        return str(self.name)
+class NonTerminalProductions(object):
+    def __init__(self, symbol, prods: List[Prod]):
+        self.symbol = symbol
+        self.prods = prods
 
 class Grammar(object):
     def __init__(self, terminals, non_terminals, productions):
         self.terminals: List[str] = terminals
         self.non_terminals: List[str] = non_terminals
-        self.productions: List[Production] = productions
+        self.non_terminal_productions: Dict[str, NonTerminalProductions] = productions # Dict[symbol, productions]
+
+    def find_productions(self, symbol: str):
+        return self.non_terminal_productions[symbol]
 
     def print_terminals(self):
         print("\nTerminals: ")
@@ -49,12 +46,19 @@ class Grammar(object):
 
     def print_productions(self):
         print("\nProductions:")
-        for p in self.productions:
-            print(str(p))
+        for symbol, non_terminal_productions in self.non_terminal_productions.items():
+            s = f"{symbol} -> "
+            for i, prod in enumerate(non_terminal_productions.prods):
+                for p in prod.result:
+                    s += str(p)
+                if i != len(non_terminal_productions.prods) - 1:
+                    s += " | "
+            print(s)
+
 
     def check_context_free_grammar(self):
-        for production in self.productions:
-            if not production.starting_symbol.name.isupper() and len(production.starting_symbol.name) != 1:
+        for key, ntps in self.non_terminal_productions.items():
+            if not SymbolType.is_terminal(key):
                 return False
         return True
 
@@ -64,7 +68,7 @@ class GrammarFileParser(object):
     def parse(path: str) -> Grammar:
         terminals: List[str] = []
         non_terminals: List[str] = []
-        productions: List[Production] = []
+        productions: Dict[str, NonTerminalProductions] = {}
 
         line_number = 0
 
@@ -78,33 +82,25 @@ class GrammarFileParser(object):
                 if line_number == 2:
                     terminals = line.split()
                 else:
-                    # inseamna ca e production
                     splitted = line.split("=>")
                     if len(splitted) != 2:
                         continue
                     starting_symbol, prod = splitted[0], splitted[1]
-                    if len(starting_symbol):
-                        print()
                     starting_symbol = starting_symbol.strip(" \n")
+                    if starting_symbol != starting_symbol.strip(" ")[0]:
+                        raise Exception("the grammar is not context free")
                     pds = [p.strip(" \n") for p in prod.split("|")]
 
-                    all_prods = []
+                    print(starting_symbol)
 
-                    for p in pds:
+                    mda = []
+
+                    for id, p in enumerate(pds):
                         l = []
                         symbols = p.split(" ")
                         symbols = [s.strip(" ") for s in symbols]
-                        for s in symbols:
-                            if s.isupper():
-                                l.append(NonTerminal(s))
-                            else:
-                                l.append(Terminal(s))
-                        all_prods.append(l)
-
-                    productions.append(Production(NonTerminal(starting_symbol), all_prods))
+                        mda.append(Prod(id, starting_symbol, symbols))
+                    productions[starting_symbol] = NonTerminalProductions(starting_symbol, mda)
 
         return Grammar(terminals, non_terminals, productions)
-
-
-
 
