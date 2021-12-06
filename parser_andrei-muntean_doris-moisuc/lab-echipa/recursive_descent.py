@@ -87,29 +87,35 @@ class RecursiveDescent(object):
         config.state = StateType.F
 
     def parse(self, sequence, verbose=True):
-        pass
+        config = Configuration(StateType.Q, 0, [], ["S"])
+        while config.state not in [StateType.F, StateType.E]:
+            if verbose:
+                print(config)
+            if config.state is StateType.Q:
+                if config.pos == len(sequence) and len(config.input_stack) == 0:
+                    self.success(config)
+                else:
+                    if SymbolType.is_terminal(config.input_stack[-1]):
+                        self.expand(config)
+                    else:
+                        if config.pos < len(sequence) and config.input_stack[-1] == sequence[config.pos]:
+                            self.advance(config)
+                        else:
+                            self.momentary_insuccess(config)
+            elif config.state == StateType.B:
+                if type(config.working_stack[-1]) is str:
+                    self.back(config)
+                else:
+                    self.another_try(config)
+        if verbose:
+            print(config)
+        if config.state is StateType.E:
+            return False
+        else:
+            return True
 
 grammar = GrammarFileParser().parse("g1.txt")
 recursive_descent = RecursiveDescent(grammar)
-
-config = Configuration(StateType.Q, 0, [], ["S"])
-
-recursive_descent.expand(config)
-print(config)
-recursive_descent.advance(config)
-print(config)
-recursive_descent.expand(config)
-print(config)
-recursive_descent.momentary_insuccess(config)
-print(config)
-recursive_descent.another_try(config)
-print(config)
-recursive_descent.advance(config)
-print(config)
-recursive_descent.expand(config)
-print(config)
-recursive_descent.advance(config)
-print(config)
-
+recursive_descent.parse("aac")
 
 
