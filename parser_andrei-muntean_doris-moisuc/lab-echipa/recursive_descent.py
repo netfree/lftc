@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List
+from typing import List, Tuple
 
 from grammar import Grammar, SymbolType, GrammarFileParser, Prod
 
@@ -110,12 +110,42 @@ class RecursiveDescent(object):
         if verbose:
             print(config)
         if config.state is StateType.E:
-            return False
+            return config
         else:
-            return True
+            return config
+
+
+#
+
+def recursive_descent(production: Prod, parent, table):
+    table
+    print(f"index: {parent+1}, info: {production.symbol}, parent: {parent}, sibling: {}")
+
+def convert_working_stack_to_table(working_stack: List[object]):
+    table: List[Tuple[int,str,int,int]] = [] # index, info, parent, sibling
+    recursive_descent(working_stack[0], 0)
+
+    # table.append((1, 'S', 0, 0))
+    # table.append((1, 'S', 0, 0))
+    # table.append((1, 'S', 0, 0))
+    #
+    # for w in working_stack:
+    #         if type(w) is not str:
+    #             prod_result: List[str] = w.result
+    #             for r in prod_result:
+    #                 table.append((len(table), r, -1, len(table) - 1))
+
+    return table
 
 grammar = GrammarFileParser().parse("g1.txt")
 recursive_descent = RecursiveDescent(grammar)
-recursive_descent.parse("aac")
+final_config = recursive_descent.parse("aac", verbose=False)
+print(final_config)
+if final_config.state == StateType.F:
+    print("success. reached final state")
+    for row in convert_working_stack_to_table(final_config.working_stack):
+        print(f"index: {row[0]}, Info: {row[1]}, Parent: {row[2]}, Sibling: {row[3]}")
+else:
+    print("error. sequence is not accepted")
 
 
