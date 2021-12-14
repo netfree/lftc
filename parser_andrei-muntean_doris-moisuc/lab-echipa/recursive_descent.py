@@ -105,6 +105,7 @@ class RecursiveDescent(object):
                         if SymbolType.is_terminal(config.input_stack[-1]):
                             self.expand(config)
                         else:
+                            print("test '", config.input_stack[-1], "''", sequence[config.pos], "'")
                             if config.pos < len(sequence) and config.input_stack[-1] == sequence[config.pos]:
                                 self.advance(config)
                             else:
@@ -149,10 +150,10 @@ class TreeConverter(object):
         return self.parsing_tree
 
 
-grammar = GrammarFileParser().parse("g1.txt")
+grammar = GrammarFileParser().parse("g3.txt")
 grammar.print_productions()
 recursive_descent = RecursiveDescent(grammar)
-final_config = recursive_descent.parse("(bbc", verbose=False)
+final_config = recursive_descent.parse("programdoris;", verbose=False)
 print(final_config)
 if final_config.state == StateType.F:
     print("success. reached final state")

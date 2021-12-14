@@ -96,12 +96,16 @@ class GrammarFileParser(object):
                     #     raise Exception("the grammar is not context free")
                     pds = [p.strip(" \n") for p in prod.split("|")]
 
-                    print(starting_symbol)
-
                     mda = []
 
                     for id, p in enumerate(pds):
                         l = []
+                        if p == "\" \"":
+                            mda.append(Prod(id, starting_symbol, [" "]))
+                            continue
+                        # if p == "\"eps\"":
+                        #     mda.append(Prod(id, starting_symbol, [""]))
+                        #     continue
                         symbols = p.split(" ")
                         symbols = [s.strip(" ") for s in symbols]
                         mda.append(Prod(id, starting_symbol, symbols))
