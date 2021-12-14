@@ -134,6 +134,7 @@ class TreeConverter(object):
         idx = len(self.parsing_tree) + 1
         left = 0
         indexes = []
+        print(working_stack)
         prod: Prod = working_stack.pop(0)
         if type(prod) is not str:
             for s in prod.result:
@@ -144,7 +145,7 @@ class TreeConverter(object):
 
             for i, s in enumerate(prod.result):
                 if s.isupper():
-                    self.get_tree_recursive(copy.deepcopy(working_stack), indexes[i])
+                    self.get_tree_recursive(working_stack, indexes[i])
         else:
             self.get_tree_recursive(working_stack, parent_idx)
 
@@ -158,7 +159,7 @@ grammar = GrammarFileParser().parse("g1.txt")
 sequence = parse_sequence("input1.txt")
 grammar.print_productions()
 recursive_descent = RecursiveDescent(grammar)
-final_config = recursive_descent.parse("aacbc", verbose=False)
+final_config = recursive_descent.parse("acbc", verbose=False)
 print(final_config)
 if final_config.state == StateType.F:
     print("success. reached final state")
