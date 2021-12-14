@@ -1,1 +1,0 @@
-program doris; var a,b:integer; c:real; d,e:boolean; begin stmt end.

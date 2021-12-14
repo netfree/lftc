@@ -1,26 +1,27 @@
-program = "program" IDENTIFIER ";" sourcecode
-sourcecode = ["var" decllist] cmpdstmt "."
-decllist = {declaration ";"}
-declaration = variablelist ":" type
-variablelist = IDENTIFIER | IDENTIFIER "," variablelist
-primitivetype = "boolean" | "char" | "integer" | "real"
-arraydecl = "array" "[" STARTINDEX ".." ENDINDEX "]" "of" primitivetype
-type = primitivetype | arraydecl
-stmtblock = stmt ";" | cmpdstmt
-cmpdstmt = "begin" stmtlist "end"
-stmtlist = stmt | stmt ";" stmtlist
-simplstmt = assignstmt | iostmt
-assignstmt = IDENTIFIER ":=" expression
-expression = expression ("+"|"-") term | term
-term = term ("*" | "div" | "mod") factor | factor
-factor = ["("] expression [")"] | IDENTIFIER
-iostmt = inputStmt | outputStmt
-outputTokens = (IDENTIFIER|CONST) | (IDENTIFIER|CONST) "," outputTokens
-inputStmt = "inputLine" "(" variablelist ")"
-outputStmt = "outputLine" "(" outputTokens ")"
-stmt = cmpdstmt | ifstmt | whilestmt
-ifstmt = "if" condition "then" stmtblock ["ELSE" stmtblock]
-whilestmt = "while" condition "do" stmtblock
-forstmt = "for" IDENTIFIER ":=" STARTVALUE ("to" | "downto") ENDVALUE stmtblock
-condition = expression RELATION expression
-RELATION = "<" | "<=" | "=" | "<>" | ">=" | ">"
+S IDENTIFIER LET_DIG_UNDERSCORE_STRING LET_DIG_UNDERSCORE LETTER DIGIT
+a b c
+S => p r o g r a m W IDENTIFIER ; W SOURCE_CODE
+SOURCE_CODE => v a r W DECLLIST CMPDSTMT . | CMPDSTMT .
+
+DECLLIST => DECLARATION | DECLARATION DECLLIST
+DECLARATION => VARIABLE_LIST : PRIMITIVE_TYPE ; W
+
+CMPDSTMT => b e g i n W UNITSTMT e n d
+STMTLIST => STMT ; W | STMT ; W STMTLIST
+UNITSTMT => STMT W | STMTLIST STMT W
+STMT => BASIC_STMT | IFSTMT
+STMTBLOCK => STMT ; W | b e g i n UNITSTMT e n d ; W
+UNITSTMTBLOCK => STMT W | b e g i n UNITSTMT e n d W
+IFSTMT => i f W CONDITION W t h e n W STMTBLOCK | i f W CONDITION W t h e n W UNITSTMTBLOCK e l s e W UNITSTMTBLOCK
+BASIC_STMT => s t m t
+CONDITION => c o n d i t i o n
+VARIABLE_LIST => IDENTIFIER | IDENTIFIER , VARIABLE_LIST
+PRIMITIVE_TYPE => b o o l e a n | c h a r | i n t e g e r | r e a l
+
+IDENTIFIER => LETTER | LETTER LET_DIG_UNDERSCORE_STRING
+LET_DIG_UNDERSCORE_STRING => LET_DIG_UNDERSCORE | LET_DIG_UNDERSCORE LET_DIG_UNDERSCORE_STRING
+LET_DIG_UNDERSCORE => LETTER | DIGIT | _
+LETTER => a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
+DIGIT => 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+W => WHITE_CHAR | WHITE_CHAR W
+WHITE_CHAR => " "

@@ -97,7 +97,6 @@ class RecursiveDescent(object):
     def parse(self, sequence, verbose=True):
         config = Configuration(StateType.Q, 0, [], ["S"])
         while config.state not in [StateType.F, StateType.E]:
-            print(sequence[0:config.pos+1])
             if verbose:
                 print(config)
             if config.state is StateType.Q:
@@ -144,7 +143,7 @@ class TreeConverter(object):
 
             for i, s in enumerate(prod.result):
                 if s.isupper():
-                    self.get_tree_recursive(copy.deepcopy(working_stack), indexes[i])
+                    self.get_tree_recursive(working_stack, indexes[i])
         else:
             self.get_tree_recursive(working_stack, parent_idx)
 
@@ -155,14 +154,15 @@ class TreeConverter(object):
 
 
 grammar = GrammarFileParser().parse("g1.txt")
-sequence = parse_sequence("input1.txt")
-grammar.print_productions()
+sequence = parse_sequence("seq.txt")
 recursive_descent = RecursiveDescent(grammar)
-final_config = recursive_descent.parse("aacbc", verbose=False)
-print(final_config)
+final_config = recursive_descent.parse(sequence, verbose=False)
 if final_config.state == StateType.F:
     print("success. reached final state")
-    print(tabulate(TreeConverter().get_tree(final_config.working_stack), ["idx", "info", "parent", "left"], tablefmt='orgtbl'))
+    f = open("out1.txt", "w")
+    f.write(tabulate(TreeConverter().get_tree(final_config.working_stack), ["idx", "info", "parent", "left"], tablefmt='orgtbl'))
+    f.close()
+    print()
 else:
     print("error. sequence is not accepted")
 
