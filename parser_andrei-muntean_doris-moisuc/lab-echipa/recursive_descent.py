@@ -4,6 +4,11 @@ from typing import List, Tuple
 from tabulate import tabulate
 from grammar import Grammar, SymbolType, GrammarFileParser, Prod
 
+def parse_sequence(file):
+    with open(file, 'r') as file:
+        data = file.read().replace('\n', '')
+    return data
+
 class StateType(Enum):
     Q = "normal state"
     B = "back state"
@@ -92,7 +97,7 @@ class RecursiveDescent(object):
     def parse(self, sequence, verbose=True):
         config = Configuration(StateType.Q, 0, [], ["S"])
         while config.state not in [StateType.F, StateType.E]:
-            print(config)
+            print(sequence[0:config.pos+1])
             if verbose:
                 print(config)
             if config.state is StateType.Q:
@@ -105,7 +110,6 @@ class RecursiveDescent(object):
                         if SymbolType.is_terminal(config.input_stack[-1]):
                             self.expand(config)
                         else:
-                            print("test '", config.input_stack[-1], "''", sequence[config.pos], "'")
                             if config.pos < len(sequence) and config.input_stack[-1] == sequence[config.pos]:
                                 self.advance(config)
                             else:
@@ -150,10 +154,11 @@ class TreeConverter(object):
         return self.parsing_tree
 
 
-grammar = GrammarFileParser().parse("g3.txt")
+grammar = GrammarFileParser().parse("g1.txt")
+sequence = parse_sequence("input1.txt")
 grammar.print_productions()
 recursive_descent = RecursiveDescent(grammar)
-final_config = recursive_descent.parse("programdoris;", verbose=False)
+final_config = recursive_descent.parse("aacbc", verbose=False)
 print(final_config)
 if final_config.state == StateType.F:
     print("success. reached final state")

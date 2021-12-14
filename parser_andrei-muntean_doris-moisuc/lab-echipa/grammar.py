@@ -103,9 +103,9 @@ class GrammarFileParser(object):
                         if p == "\" \"":
                             mda.append(Prod(id, starting_symbol, [" "]))
                             continue
-                        # if p == "\"eps\"":
-                        #     mda.append(Prod(id, starting_symbol, [""]))
-                        #     continue
+                        if p == "\"eps\"":
+                            mda.append(Prod(id, starting_symbol, [""]))
+                            continue
                         symbols = p.split(" ")
                         symbols = [s.strip(" ") for s in symbols]
                         mda.append(Prod(id, starting_symbol, symbols))
