@@ -16,6 +16,11 @@ class Prod(object):
         self.symbol = symbol
         self.result = result
 
+    def __str__(self):
+        return self.symbol + str(self.id)
+
+    def __repr__(self):
+        return self.__str__()
 class NonTerminalProductions(object):
     def __init__(self, symbol, prods: List[Prod]):
         self.symbol = symbol
@@ -87,8 +92,8 @@ class GrammarFileParser(object):
                         continue
                     starting_symbol, prod = splitted[0], splitted[1]
                     starting_symbol = starting_symbol.strip(" \n")
-                    if starting_symbol != starting_symbol.strip(" ")[0]:
-                        raise Exception("the grammar is not context free")
+                    # if starting_symbol != starting_symbol.strip(" ")[0]:
+                    #     raise Exception("the grammar is not context free")
                     pds = [p.strip(" \n") for p in prod.split("|")]
 
                     print(starting_symbol)

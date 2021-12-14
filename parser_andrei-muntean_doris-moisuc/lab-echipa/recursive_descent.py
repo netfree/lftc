@@ -1,6 +1,7 @@
+import copy
 from enum import Enum
 from typing import List, Tuple
-
+from tabulate import tabulate
 from grammar import Grammar, SymbolType, GrammarFileParser, Prod
 
 class StateType(Enum):
@@ -43,7 +44,8 @@ class RecursiveDescent(object):
         config.input_stack.pop()
         A1 = ntps.prods[0]
         config.working_stack.append(A1)
-        config.input_stack = A1.result[::-1] + config.input_stack
+        config.input_stack = A1.result + config.input_stack[::-1]
+        config.input_stack = config.input_stack[::-1]
 
     def advance(self, config: Configuration):
         config.pos += 1
@@ -75,7 +77,8 @@ class RecursiveDescent(object):
         if last_prod.id + 1 < len(all_prods.prods): # verify if there are no longer any productions
             config.working_stack.append(all_prods.prods[last_prod.id+1])
             A1 = config.working_stack[-1]
-            config.input_stack = A1.result[::-1] + config.input_stack
+            config.input_stack = A1.result + config.input_stack[::-1]
+            config.input_stack = config.input_stack[::-1]
             config.state = StateType.Q
         else: # tried all possibilities
             if last_prod.symbol == "S" and config.pos == 0:
@@ -89,19 +92,23 @@ class RecursiveDescent(object):
     def parse(self, sequence, verbose=True):
         config = Configuration(StateType.Q, 0, [], ["S"])
         while config.state not in [StateType.F, StateType.E]:
+            print(config)
             if verbose:
                 print(config)
             if config.state is StateType.Q:
                 if config.pos == len(sequence) and len(config.input_stack) == 0:
                     self.success(config)
                 else:
-                    if SymbolType.is_terminal(config.input_stack[-1]):
-                        self.expand(config)
+                    if len(config.input_stack) == 0:
+                        self.momentary_insuccess(config)
                     else:
-                        if config.pos < len(sequence) and config.input_stack[-1] == sequence[config.pos]:
-                            self.advance(config)
+                        if SymbolType.is_terminal(config.input_stack[-1]):
+                            self.expand(config)
                         else:
-                            self.momentary_insuccess(config)
+                            if config.pos < len(sequence) and config.input_stack[-1] == sequence[config.pos]:
+                                self.advance(config)
+                            else:
+                                self.momentary_insuccess(config)
             elif config.state == StateType.B:
                 if type(config.working_stack[-1]) is str:
                     self.back(config)
@@ -115,36 +122,41 @@ class RecursiveDescent(object):
             return config
 
 
-#
+class TreeConverter(object):
+    def __init__(self):
+        self.parsing_tree: List[Tuple[int,str,int,int]] = [] # index, info, parent, sibling
+    def get_tree_recursive(self, working_stack, parent_idx):
+        idx = len(self.parsing_tree) + 1
+        left = 0
+        indexes = []
+        prod: Prod = working_stack.pop(0)
+        if type(prod) is not str:
+            for s in prod.result:
+                self.parsing_tree.append((idx, s, parent_idx, left))
+                indexes.append(idx)
+                left = idx
+                idx += 1
 
-def recursive_descent(production: Prod, parent, table):
-    table
-    print(f"index: {parent+1}, info: {production.symbol}, parent: {parent}, sibling: {}")
+            for i, s in enumerate(prod.result):
+                if s.isupper():
+                    self.get_tree_recursive(copy.deepcopy(working_stack), indexes[i])
+        else:
+            self.get_tree_recursive(working_stack, parent_idx)
 
-def convert_working_stack_to_table(working_stack: List[object]):
-    table: List[Tuple[int,str,int,int]] = [] # index, info, parent, sibling
-    recursive_descent(working_stack[0], 0)
+    def get_tree(self, working_stack):
+        self.parsing_tree.append((1, "S", 0, 0))
+        self.get_tree_recursive(working_stack, 1)
+        return self.parsing_tree
 
-    # table.append((1, 'S', 0, 0))
-    # table.append((1, 'S', 0, 0))
-    # table.append((1, 'S', 0, 0))
-    #
-    # for w in working_stack:
-    #         if type(w) is not str:
-    #             prod_result: List[str] = w.result
-    #             for r in prod_result:
-    #                 table.append((len(table), r, -1, len(table) - 1))
-
-    return table
 
 grammar = GrammarFileParser().parse("g1.txt")
+grammar.print_productions()
 recursive_descent = RecursiveDescent(grammar)
-final_config = recursive_descent.parse("aac", verbose=False)
+final_config = recursive_descent.parse("(bbc", verbose=False)
 print(final_config)
 if final_config.state == StateType.F:
     print("success. reached final state")
-    for row in convert_working_stack_to_table(final_config.working_stack):
-        print(f"index: {row[0]}, Info: {row[1]}, Parent: {row[2]}, Sibling: {row[3]}")
+    print(tabulate(TreeConverter().get_tree(final_config.working_stack), ["idx", "info", "parent", "left"], tablefmt='orgtbl'))
 else:
     print("error. sequence is not accepted")
 
