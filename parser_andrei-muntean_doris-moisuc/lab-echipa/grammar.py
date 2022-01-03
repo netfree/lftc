@@ -28,7 +28,7 @@ class NonTerminalProductions(object):
 
 class Grammar(object):
     def __init__(self, terminals, non_terminals, productions):
-        self.terminals: List[str] = terminals
+        self.terminals: List[str] = terminals        # the using of types in Python is very much appreciated
         self.non_terminals: List[str] = non_terminals
         self.non_terminal_productions: Dict[str, NonTerminalProductions] = productions # Dict[symbol, productions]
 
