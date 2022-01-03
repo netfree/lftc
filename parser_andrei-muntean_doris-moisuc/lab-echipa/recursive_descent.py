@@ -4,6 +4,8 @@ from typing import List, Tuple
 from tabulate import tabulate
 from grammar import Grammar, SymbolType, GrammarFileParser, Prod
 
+# a more modular approach would be easier to follow
+
 def parse_sequence(file):
     with open(file, 'r') as file:
         data = file.read().replace('\n', '')
