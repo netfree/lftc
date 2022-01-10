@@ -1,0 +1,44 @@
+%{ 	 
+#include <math.h> 
+%} 
+
+DIGIT       [0-9]
+IDENTIFER   [a-z][a-z0-9]*
+STRING		\"[a-zA-Z0-9]*\"
+CHAR 	    \'[a-zA-Z0-9]\'
+
+%% 
+
+{DIGIT}+ printf( "An integer: %s (%d)\n", yytext, atoi( yytext ) ); 
+
+{DIGIT}+"."{DIGIT}*  printf( "A float: %s (%g)\n", yytext, atof( yytext ) );  
+
+"if" |"then" |"begin" |"end" |"procedure" |"function"| "and" | "array" | "begin" | "boolean" | "char" | "const" | "div" | "do" | "downto" | "else" | "end" | "for" | "if" | "inputLine" | "integer" | "mod" | "not" | "of" | "or" | "outputLine" | "program" | "record" | "string" | "then" | "to" | "type" | "var" | "while" | "xor"  printf( "A keyword has been detected: %s\n", yytext );  
+
+{IDENTIFER} printf( "An identifier: %s\n", yytext );
+
+{STRING} printf( "A string: %s\n", yytext );
+
+{CHAR} printf( "A char: %s\n", yytext );
+
+"+" | "-" | "*" | "/" | "div" | "mod" | ":=" | "<" | "<=" | "=" | ">=" | "<>" | "not" | "and" | "or" printf( "An operator: %s\n", yytext ); 
+
+"[" | "]" | "(" | ")" | ":" | ";" | "," | "." | ".." printf( "An separator: %s\n", yytext ); 
+
+"{"[^}\n]*"}" 		/* eat up one-line comments */ 
+
+[ \t\n]+ 		/* eat up whitespace */ 
+		 
+. printf("Eroare\n");
+%% 
+main( argc, argv ) 
+int argc; 
+char **argv; 
+{ 
+    ++argv, --argc; /* skip over program name */ 
+    if ( argc > 0 ) 
+    yyin = fopen( argv[0], "r" ); 
+    else 
+     yyin = stdin; 
+    yylex(); 
+} 
