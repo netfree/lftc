@@ -1,0 +1,74 @@
+%{
+#include "y.tab.h"
+%}
+
+%option noyywrap
+%option caseless
+
+INTEGER				[+-]?[1-9][0-9]*|0
+CHARACTER			\'[A-Za-z0-9 ]\'
+STRING 				\"[^"]*\"
+IDENTIFIER			[A-Za-z][A-Za-z0-9_]*
+BOOLEAN 			true|false
+
+%%
+
+[ \t\n] 
+
+and {printf("RESERVED WORD:   %s\n", yytext);  return AND;}
+begin {printf("RESERVED WORD:   %s\n", yytext);  return BEGINN;}
+boolean {printf("RESERVED WORD:   %s\n", yytext);  return BOOLEAN;}
+char {printf("RESERVED WORD:   %s\n", yytext);  return CHAR;}
+const {printf("RESERVED WORD:   %s\n", yytext);  return CONST;}
+do {printf("RESERVED WORD:   %s\n", yytext);  return DO;}
+else {printf("RESERVED WORD:   %s\n", yytext); return ELSE;}
+end {printf("RESERVED WORD:   %s\n", yytext); return END; }
+for {printf("RESERVED WORD:   %s\n", yytext); return FOR; }
+if {printf("RESERVED WORD:   %s\n", yytext);  return IF;}
+inputLine {printf("RESERVED WORD:   %s\n", yytext); return READ; }
+integer {printf("RESERVED WORD:   %s\n", yytext);  return INTEGER;}
+or {printf("RESERVED WORD:   %s\n", yytext);  return OR;}
+outputLine {printf("RESERVED WORD:   %s\n", yytext);  return PRINT;}
+program {printf("RESERVED WORD:   %s\n", yytext);  return PROGRAM;}
+string {printf("RESERVED WORD:   %s\n", yytext); return STRING; }
+then {printf("RESERVED WORD:   %s\n", yytext);  return THEN;}
+to {printf("RESERVED WORD:   %s\n", yytext); return TO; }
+var {printf("RESERVED WORD:   %s\n", yytext);  return VAR;}
+while {printf("RESERVED WORD:   %s\n", yytext);  return WHILE;}
+
+\; {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+\: {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+\, {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+\. {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+".." {printf("SEPARATOR:       %s\n", yytext);  }
+\( {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+\) {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+\[ {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+\] {printf("SEPARATOR:       %s\n", yytext); return yytext[0]; }
+
+\+ {printf("OPERATOR:        %s\n", yytext); return yytext[0]; }
+- {printf("OPERATOR:        %s\n", yytext);  return yytext[0];}
+\* {printf("OPERATOR:        %s\n", yytext); return yytext[0]; }
+div {printf("OPERATOR:        %s\n", yytext);  return DIV;}
+mod {printf("OPERATOR:        %s\n", yytext);  return MOD;}
+not {printf("OPERATOR:        %s\n", yytext);  return NOT;}
+":=" {printf("OPERATOR:        %s\n", yytext);  return ATRIB;}
+\< {printf("OPERATOR:        %s\n", yytext); return yytext[0]; }
+"<=" {printf("OPERATOR:        %s\n", yytext);  return LE;}
+= {printf("OPERATOR:        %s\n", yytext); return yytext[0]; }
+"<>" {printf("OPERATOR:        %s\n", yytext);  return NE;}
+">=" {printf("OPERATOR:        %s\n", yytext);  return GE;}
+\> {printf("OPERATOR:        %s\n", yytext); return yytext[0]; }
+
+{INTEGER} {printf("CONST INTEGER: yylval.p_val %s\n", yytext);  return CONST_INT; }
+{BOOLEAN} {printf("CONST BOOLEAN:   %s\n", yytext); return CONST_BOOL; }
+{CHARACTER} {printf("CONST CHARACTER: %s\n", yytext);  return CONST_CHAR;}
+{STRING} {printf("CONST STRING:    %s\n", yytext); return CONST_STRING;}
+
+{IDENTIFIER} {printf("IDENTIFIER:      %s\n", yytext); return ID;}
+
+\#.*
+
+. {printf("Error %s\n", yytext);  }
+
+%%

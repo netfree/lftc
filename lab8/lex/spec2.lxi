@@ -1,0 +1,134 @@
+%{
+#include <math.h>
+
+int next_free = 0;
+char vars[999][999];
+char ST[9999]="";
+char PIF[9999]="";
+
+int in_st(char *token) {
+     for(int i = 0; i < next_free; i ++)
+        if(strcmp(vars[i], token) == 0)
+            return i;
+    return 0;
+}
+
+int get_pos_in_st(char *token){
+    for(int i = 0; i < next_free; i ++)
+        if(strcmp(vars[i], token) == 0)
+            return i;
+    strcpy(vars[next_free], token);
+    next_free = next_free + 1;
+    return next_free - 1;
+}
+
+void add_st(char* token){
+    if(in_st(token) == 0){
+        char buffer[100];
+        sprintf(buffer,"%d",get_pos_in_st(token));
+        strcat(ST,buffer);
+        strcat(ST," ");
+        strcat(ST,token);
+        strcat(ST,"\n");
+    }
+}
+void add_pif(char* token, int stpos){
+	char buffer[100];
+	sprintf(buffer,"%d",stpos);
+	strcat(PIF,token);
+	strcat(PIF,"  ");
+	strcat(PIF,buffer);
+	strcat(PIF,"\n");
+} 
+%}
+
+%option noyywrap
+%option caseless
+
+INTEGER				[+-]?[1-9][0-9]*|0
+CHARACTER			\'[A-Za-z0-9 ]\'
+STRING 				\"[^"]*\"
+IDENTIFIER			[A-Za-z][A-Za-z0-9_]*
+BOOLEAN 			true|false
+
+%%
+
+[ \t\n] 
+
+and {printf("RESERVED WORD:   %s\n", yytext);add_pif(yytext, 0);   }
+array {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+begin {printf("RESERVED WORD:   %s\n", yytext);add_pif(yytext, 0);   }
+boolean {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+char {printf("RESERVED WORD:   %s\n", yytext);add_pif(yytext, 0);   }
+const {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+do {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+else {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+end {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+for {printf("RESERVED WORD:   %s\n", yytext);  add_pif(yytext, 0); }
+if {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+inputLine {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+integer {printf("RESERVED WORD:   %s\n", yytext);add_pif(yytext, 0);   }
+of {printf("RESERVED WORD:   %s\n", yytext);add_pif(yytext, 0);   }
+or {printf("RESERVED WORD:   %s\n", yytext);  add_pif(yytext, 0); }
+outputLine {printf("RESERVED WORD:   %s\n", yytext);add_pif(yytext, 0);   }
+program {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0); }
+record {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+string {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+then {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+to {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+type {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+var {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+while {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+xor {printf("RESERVED WORD:   %s\n", yytext); add_pif(yytext, 0);  }
+
+\; {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+\: {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+\, {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+\. {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+".." {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+\( {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+\) {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+\[ {printf("SEPARATOR:       %s\n", yytext);  add_pif(yytext, 0); }
+\] {printf("SEPARATOR:       %s\n", yytext); add_pif(yytext, 0);  }
+
+\+ {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+- {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+\* {printf("OPERATOR:        %s\n", yytext);add_pif(yytext, 0);   }
+div {printf("OPERATOR:        %s\n", yytext);add_pif(yytext, 0);   }
+mod {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+not {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+":=" {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+\< {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+"<=" {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+= {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+"<>" {printf("OPERATOR:        %s\n", yytext);add_pif(yytext, 0);   }
+">=" {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+\> {printf("OPERATOR:        %s\n", yytext); add_pif(yytext, 0);  }
+
+{INTEGER} {printf("CONST INTEGER:   %s\n", yytext);  add_st(yytext); add_pif(yytext, in_st(yytext)); }
+{BOOLEAN} {printf("CONST BOOLEAN:   %s\n", yytext);  add_st(yytext);add_pif(yytext, in_st(yytext)); }
+{CHARACTER} {printf("CONST CHARACTER: %s\n", yytext);  add_st(yytext);add_pif(yytext, in_st(yytext)); }
+{STRING} {printf("CONST STRING:    %s\n", yytext);  add_st(yytext);add_pif(yytext, in_st(yytext)); }
+
+{IDENTIFIER} {printf("IDENTIFIER:      %s\n", yytext); add_st(yytext); add_pif(yytext, in_st(yytext)); }
+
+\#.*
+
+. {printf("Error %s\n", yytext);  }
+
+%% 
+main( argc, argv ) 
+int argc; 
+char **argv; 
+{ 
+    ++argv, --argc;
+    if ( argc > 0 ) 
+    yyin = fopen( argv[0], "r" ); 
+    else 
+     yyin = stdin; 
+    yylex(); 
+	printf("PIF:\n%s",PIF);
+	printf("ST:\n%s",ST);
+
+
+}

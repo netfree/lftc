@@ -1,0 +1,17 @@
+program max_of_n_numbers;
+var
+    a, b, sum: integer;
+begin
+    sum := 0;
+    
+    outputLine("Give n: ");
+    inputLine(n);
+
+    for i:=1 to n do begin 
+        outputLine("Give number");
+        inputLine(nr);
+        sum := sum + nr
+    end;
+    
+    outputLine("Sum: ", sum);
+end.

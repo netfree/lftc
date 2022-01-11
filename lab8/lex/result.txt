@@ -1,0 +1,163 @@
+RESERVED WORD:   program
+IDENTIFIER:      max_of_3_numbers
+SEPARATOR:       ;
+RESERVED WORD:   var
+IDENTIFIER:      a
+SEPARATOR:       ,
+IDENTIFIER:      b
+SEPARATOR:       ,
+IDENTIFIER:      c
+SEPARATOR:       ,
+IDENTIFIER:      max
+SEPARATOR:       :
+RESERVED WORD:   integer
+SEPARATOR:       ;
+RESERVED WORD:   begin
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Give first number: "
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   inputLine
+SEPARATOR:       (
+IDENTIFIER:      a
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Give second number: "
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   inputLine
+SEPARATOR:       (
+IDENTIFIER:      b
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Give third number: "
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   inputLine
+SEPARATOR:       (
+IDENTIFIER:      c
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   if
+IDENTIFIER:      a
+OPERATOR:        >=
+IDENTIFIER:      b
+RESERVED WORD:   then
+IDENTIFIER:      max
+OPERATOR:        :=
+IDENTIFIER:      a
+RESERVED WORD:   else
+RESERVED WORD:   if
+IDENTIFIER:      b
+OPERATOR:        >=
+IDENTIFIER:      c
+RESERVED WORD:   then
+IDENTIFIER:      max
+OPERATOR:        :=
+IDENTIFIER:      b
+RESERVED WORD:   else
+IDENTIFIER:      max
+OPERATOR:        :=
+IDENTIFIER:      c
+SEPARATOR:       ;
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Maximum is: "
+SEPARATOR:       ,
+IDENTIFIER:      max
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   end
+SEPARATOR:       .
+PIF:
+program  0
+max_of_3_numbers  0
+;  0
+var  0
+a  1
+,  0
+b  2
+,  0
+c  3
+,  0
+max  4
+:  0
+integer  0
+;  0
+begin  0
+outputLine  0
+(  0
+"Give first number: "  5
+)  0
+;  0
+inputLine  0
+(  0
+a  1
+)  0
+;  0
+outputLine  0
+(  0
+"Give second number: "  6
+)  0
+;  0
+inputLine  0
+(  0
+b  2
+)  0
+;  0
+outputLine  0
+(  0
+"Give third number: "  7
+)  0
+;  0
+inputLine  0
+(  0
+c  3
+)  0
+;  0
+if  0
+a  1
+>=  0
+b  2
+then  0
+max  4
+:=  0
+a  1
+else  0
+if  0
+b  2
+>=  0
+c  3
+then  0
+max  4
+:=  0
+b  2
+else  0
+max  4
+:=  0
+c  3
+;  0
+outputLine  0
+(  0
+"Maximum is: "  8
+,  0
+max  4
+)  0
+;  0
+end  0
+.  0
+ST:
+0 max_of_3_numbers
+1 a
+2 b
+3 c
+4 max
+5 "Give first number: "
+6 "Give second number: "
+7 "Give third number: "
+8 "Maximum is: "

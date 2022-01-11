@@ -1,0 +1,3 @@
+clear && lex spec.lxi && gcc -w lex.yy.c -o lex -lfl && ./lex<p2.txt > "result.txt"
+clear && yacc -d spec.y && gcc -w lex.yy.c y.tab.c -o result -lfl
+clear && yacc -d spec.y && gcc -w lex.yy.c y.tab.c -o result -lfl && ./result < p2.txt 

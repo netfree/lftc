@@ -1,0 +1,76 @@
+RESERVED WORD:   program
+IDENTIFIER:      max_of_3_numbers
+SEPARATOR:       ;
+RESERVED WORD:   var
+IDENTIFIER:      a
+SEPARATOR:       ,
+IDENTIFIER:      b
+SEPARATOR:       ,
+IDENTIFIER:      c
+SEPARATOR:       ,
+IDENTIFIER:      max
+SEPARATOR:       :
+RESERVED WORD:   integer
+SEPARATOR:       ;
+RESERVED WORD:   begin
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Give first number: "
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   inputLine
+SEPARATOR:       (
+IDENTIFIER:      a
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Give second number: "
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   inputLine
+SEPARATOR:       (
+IDENTIFIER:      b
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Give third number: "
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   inputLine
+SEPARATOR:       (
+IDENTIFIER:      c
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   if
+IDENTIFIER:      a
+OPERATOR:        >=
+IDENTIFIER:      b
+RESERVED WORD:   then
+IDENTIFIER:      max
+OPERATOR:        :=
+IDENTIFIER:      a
+RESERVED WORD:   else
+RESERVED WORD:   if
+IDENTIFIER:      b
+OPERATOR:        >=
+IDENTIFIER:      c
+RESERVED WORD:   then
+IDENTIFIER:      max
+OPERATOR:        :=
+IDENTIFIER:      b
+RESERVED WORD:   else
+IDENTIFIER:      max
+OPERATOR:        :=
+IDENTIFIER:      c
+SEPARATOR:       ;
+RESERVED WORD:   outputLine
+SEPARATOR:       (
+CONST STRING:    "Maximum is: "
+SEPARATOR:       ,
+IDENTIFIER:      max
+SEPARATOR:       )
+SEPARATOR:       ;
+RESERVED WORD:   end
+SEPARATOR:       .
